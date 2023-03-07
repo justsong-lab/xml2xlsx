@@ -6,8 +6,12 @@ from openpyxl import Workbook
 
 
 def convert(input_path, output_path):
-    with open(input_path, 'r') as f:
-        root = ET.fromstring(f.read())
+    try:
+        with open(input_path, 'r') as f:
+            root = ET.fromstring(f.read())
+    except:
+        with open(input_path, 'r', encoding='utf-8') as f:
+            root = ET.fromstring(f.read())
     data = []
     for child in root:
         for item in child:
@@ -35,7 +39,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_path', type=str, default='test.xml')
-    parser.add_argument('--output_path', type=str, default='./data')
+    parser.add_argument('--input_path', type=str, default='data.xml')
+    parser.add_argument('--output_path', type=str, default='.')
     args_ = parser.parse_args()
     main(args_)
